@@ -64,7 +64,7 @@ body {
 #loader {
   position: fixed;
   z-index: 3000;
-  background: #0b0b0be0; /* Bardzo ciemny */
+  background: #0b0b0be0; 
   top: 0; left: 0; right: 0; bottom: 0;
   display: flex;
   flex-direction: column;
@@ -72,7 +72,7 @@ body {
   justify-content: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   transition: opacity .4s;
-  /* Zapobiega prześwitywaniu wszystkiego! */
+  
   backdrop-filter: none !important;
 }
 
@@ -95,7 +95,6 @@ body {
   letter-spacing: 2px;
 }
 
-/* Hide everything except loader while loading */
 body.loading > *:not(#loader) {
   display: none !important;
 }
@@ -103,10 +102,9 @@ body.loading {
   overflow: hidden !important;
 }
 
-/* Sidebar */
 .sidebar-toggle {
   position: fixed;
-  top: 20px; /* Wyżej w lewym górnym rogu */
+  top: 20px; 
   left: 12px;
   z-index: 30;
   background: #232323cc;
@@ -136,7 +134,7 @@ body.loading {
 
 .sidebar {
   position: fixed;
-  top: 80px; /* Niżej na ekranie */
+  top: 80px; 
   left: 16px;
   min-width: 210px;
   max-width: 260px;
@@ -408,7 +406,7 @@ body.loading {
   word-break: break-word;
 }
 .extra-info a {
-  color: #1da1f2; /* fajny niebieski */
+  color: #1da1f2; 
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s ease;
@@ -422,25 +420,21 @@ body.loading {
 </head>
 <body class="loading">
 
-<!-- Loader -->
 <div id="loader">
   <div class="loader-text">Ładowanie</div>
   <div class="loader-dots" id="dots">.</div>
 </div>
 
-<!-- Animowany napis u góry -->
 <div class="animated-title-container">
   <span class="animated-title" id="animated-title"></span>
 </div>
 
-<!-- Sidebar toggle -->
 <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Otwórz pasek boczny">
   <span></span>
   <span></span>
   <span></span>
 </button>
 
-<!-- Sidebar lewy -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-title">O mnie</div>
   <a class="sidebar-discord" href="https://discord.gg/U33SkzujMZ" target="_blank" rel="noopener noreferrer" style="text-decoration:none; background:#e3e5e8; padding:6px 14px; border-radius:9px; display:inline-flex; align-items:center;">
@@ -510,7 +504,7 @@ body.loading {
   </div>
 
 <script>
-// Loader dots animation
+
 const loader = document.getElementById('loader');
 const dots = document.getElementById('dots');
 let dotCount = 1;
@@ -528,7 +522,6 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 2500);
 });
 
-// Animated typing title
 const titleElement = document.getElementById('animated-title');
 const titleText = 'szajzer land';
 let titleIndex = 0;
@@ -557,19 +550,16 @@ function animateTitle() {
 }
 animateTitle();
 
-// Sidebar logic
 const sidebar = document.getElementById('sidebar');
 const sidebarToggle = document.getElementById('sidebar-toggle');
 let sidebarOpen = false;
 
-// Open/close on hamburger
 sidebarToggle.addEventListener('click', () => {
   sidebarOpen = !sidebarOpen;
   sidebar.classList.toggle('open', sidebarOpen);
   sidebarToggle.setAttribute('aria-label', sidebarOpen ? "Zamknij pasek boczny" : "Otwórz pasek boczny");
 });
 
-// Zamknij sidebar po kliknięciu poza nim
 document.addEventListener('mousedown', e => {
   if (sidebarOpen && !sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
     sidebarOpen = false;
@@ -578,7 +568,6 @@ document.addEventListener('mousedown', e => {
   }
 });
 
-// Zamknij na ESC
 document.addEventListener('keydown', e => {
   if (sidebarOpen && (e.key === 'Escape' || e.key === 'Esc')) {
     sidebarOpen = false;
