@@ -18,7 +18,7 @@ body {
   justify-content: center;
   align-items: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #eee;
+  color: #000000;
   padding: 40px;
   background: none;
   position: relative;
@@ -36,6 +36,7 @@ body {
   z-index: -1;
   object-fit: cover;
   filter: blur(10px) brightness(0.5);
+  transform: scale(1.1); 
 }
 
 .animated-title-container {
@@ -64,7 +65,7 @@ body {
 #loader {
   position: fixed;
   z-index: 3000;
-  background: #0b0b0be0; 
+  background: #000000e0; 
   top: 0; left: 0; right: 0; bottom: 0;
   display: flex;
   flex-direction: column;
@@ -89,7 +90,7 @@ body {
 }
 
 .loader-text {
-  color: #aaa;
+  color: #ffffff;
   font-size: 1.2rem;
   margin-bottom: 12px;
   letter-spacing: 2px;
@@ -107,7 +108,7 @@ body.loading {
   top: 20px; 
   left: 12px;
   z-index: 30;
-  background: #232323cc;
+  background: #23232300;
   border-radius: 0 10px 10px 0;
   padding: 8px 8px 8px 12px;
   cursor: pointer;
@@ -315,9 +316,9 @@ body.loading {
   pointer-events: none;
   z-index: 10;
   background: 
-    linear-gradient(90deg, transparent, white, transparent) top/100% 2px no-repeat,
-    linear-gradient(180deg, transparent, white, transparent) right/2px 100% no-repeat,
-    linear-gradient(270deg, transparent, white, transparent) bottom/100% 2px no-repeat,
+    linear-gradient(90deg, transparent, rgb(0, 0, 0), transparent) top/100% 2px no-repeat,
+    linear-gradient(180deg, transparent, rgb(0, 0, 0), transparent) right/2px 100% no-repeat,
+    linear-gradient(270deg, transparent, rgb(0, 0, 0), transparent) bottom/100% 2px no-repeat,
     linear-gradient(0deg, transparent, white, transparent) left/2px 100% no-repeat;
   animation: borderMove 4s linear infinite;
   opacity: 0;
@@ -415,7 +416,51 @@ body.loading {
   color: #4fc3f7;
   text-decoration: underline;
 }
+
+#click-start {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #000;
+  color: #fff;
+  font-size: 2rem;
+  z-index: 5000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.napis {
+  position: absolute;
+  top: 92%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  animation: floatUpDown 2.5s ease-in-out infinite;
+}
+
+@keyframes floatUpDown {
+  0% {
+    transform: translate(-50%, -30%);
+  }
+  50% {
+    transform: translate(-50%, -60%);
+  }
+  100% {
+    transform: translate(-50%, -30%);
+  }
+}
+
+
 </style>
+
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono:400,700&display=swap" />
 </head>
 <body class="loading">
@@ -425,17 +470,19 @@ body.loading {
   <div class="loader-dots" id="dots">.</div>
 </div>
 
-<div class="animated-title-container">
+<div id="click-start">Wpierdalam się</div>
+
+<div class="animated-title-container hidden">
   <span class="animated-title" id="animated-title"></span>
 </div>
 
-<button class="sidebar-toggle" id="sidebar-toggle" aria-label="Otwórz pasek boczny">
+<button class="sidebar-toggle hidden" id="sidebar-toggle" aria-label="Otwórz pasek boczny">
   <span></span>
   <span></span>
   <span></span>
 </button>
 
-<aside class="sidebar" id="sidebar">
+<aside class="sidebar hidden" id="sidebar">
   <div class="sidebar-title">O mnie</div>
   <a class="sidebar-discord" href="https://discord.gg/U33SkzujMZ" target="_blank" rel="noopener noreferrer" style="text-decoration:none; background:#e3e5e8; padding:6px 14px; border-radius:9px; display:inline-flex; align-items:center;">
     <img src="https://i.imgur.com/vDTKX1Q.jpeg" alt="avatar" style="width:26px;height:26px;border-radius:50%;margin-right:7px;">
@@ -445,15 +492,14 @@ body.loading {
   <div class="sidebar-info">Email: <a href="mailto:cvel@szajzer.xyz">cvel@szajzer.xyz</a></div>
 </aside>
 
-<video autoplay muted loop playsinline id="background-video">
+<video autoplay muted loop playsinline id="background-video" class="hidden">
   <source src="tlo.mp4" type="video/mp4" />
   Twoja przeglądarka nie wspiera odtwarzania wideo w tle.
 </video>
 
-<div class="container">
+<div class="container hidden">
 
-<div class="cards-row"> //
-
+  <div class="cards-row">
     <div class="card">
       <img class="avatar" src="https://i.imgur.com/ZnVlRDL.png" alt="Ziomek2" />
       <h2>ospek29</h2>
@@ -505,12 +551,27 @@ body.loading {
 
       </div>
     </div>
+
+    <audio id="bg-music" src="muzyka.mp3" preload="auto"></audio>
+
+        <div class="napis"
+        <p>kocham was pzdr 😘</p>
+
+
   </div>
 
 <script>
 
 const loader = document.getElementById('loader');
 const dots = document.getElementById('dots');
+const clickStart = document.getElementById('click-start');
+const bgMusic = document.getElementById('bg-music');
+const animatedTitleContainer = document.querySelector('.animated-title-container');
+const sidebarToggle = document.getElementById('sidebar-toggle');
+const sidebar = document.getElementById('sidebar');
+const backgroundVideo = document.getElementById('background-video');
+const container = document.querySelector('.container');
+
 let dotCount = 1;
 let interval = setInterval(() => {
   dotCount = (dotCount % 3) + 1;
@@ -522,12 +583,31 @@ window.addEventListener('DOMContentLoaded', () => {
     document.body.classList.remove('loading');
     loader.style.opacity = 0;
     setTimeout(() => loader.style.display = "none", 400);
+
     clearInterval(interval);
+
+    // Show "Click to Start" after loader disappears
+    clickStart.style.display = "flex";
   }, 2500);
 });
 
+clickStart.addEventListener('click', () => {
+  // Hide "Click to Start"
+  clickStart.style.display = "none";
+
+  // Show main content
+  animatedTitleContainer.classList.remove('hidden');
+  sidebarToggle.classList.remove('hidden');
+  sidebar.classList.remove('hidden');
+  backgroundVideo.classList.remove('hidden');
+  container.classList.remove('hidden');
+
+  // Play music
+  bgMusic.play();
+});
+
 const titleElement = document.getElementById('animated-title');
-const titleText = 'szajzer land';
+const titleText = 'Tablica Chwały';
 let titleIndex = 0;
 let typing = true;
 
@@ -554,8 +634,7 @@ function animateTitle() {
 }
 animateTitle();
 
-const sidebar = document.getElementById('sidebar');
-const sidebarToggle = document.getElementById('sidebar-toggle');
+// Deklaracja zmiennej sidebarOpen na zewnątrz funkcji addEventListener
 let sidebarOpen = false;
 
 sidebarToggle.addEventListener('click', () => {
