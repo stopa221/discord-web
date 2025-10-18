@@ -1,505 +1,203 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>szajzer.xyz — topka</title>
-  <meta name="description" content="Stealery, malware, tools, automatyzacje — szajzer.xyz" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>szajzer.xyz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #0b0d10;
-      --bg-soft: #0f1217;
-      --panel: rgba(255, 255, 255, 0.04);
-      --text: #e6e9ef;
-      --muted: #9aa4b2;
-      --accent: #8B0000;
-      --accent-2: #d7263d;
-      --radius: 16px;
-      --shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.03);
-      --blur: saturate(1.2) blur(8px);
-      --speed: 320ms;
+    :root{
+      --bg1:#0b1020;
+      --bg2:#071426;
+      --neon1:#6cffb2;
+      --neon2:#7bd2ff;
+      --accent:#ffd36b;
     }
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      font: 500 16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      color: var(--text);
-      background: var(--bg);
-      overflow-x: hidden;
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;padding:0;overflow-x:hidden}
+    body{
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(123,210,255,0.06), transparent),
+                  radial-gradient(900px 500px at 90% 80%, rgba(108,255,178,0.04), transparent),
+                  linear-gradient(180deg,var(--bg1),var(--bg2));
+      color:#fff;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      min-height:100vh;
     }
-    #particles-bg {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      z-index: -1;
-      pointer-events: none;
+
+    canvas#bg{
+      position:fixed;inset:0;z-index:0;display:block;width:100%;height:100%;
     }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    header {
-      position: sticky; top: 0; z-index: 50;
-      backdrop-filter: var(--blur);
-      background: linear-gradient(180deg, rgba(10,12,15,.76), rgba(10,12,15,.45) 60%, transparent);
-      border-bottom: 1px solid rgba(255,255,255,.06);
+
+    .center{
+      position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+      padding:2rem;
+      width:100%;max-width:100%;
     }
-    .nav {
-      max-width: 1100px; margin: 0 auto; padding: 12px 20px;
-      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px;
+
+    .badge{
+      font-family:Orbitron, sans-serif;
+      font-weight:900;
+      font-size:clamp(32px,12vw,140px);
+      letter-spacing:0.02em;
+      color:var(--neon2);
+      text-transform:lowercase;
+      line-height:1.1;
+      padding:0.6em 0.9em;
+      -webkit-filter:drop-shadow(0 6px 18px rgba(0,0,0,0.6));
+      word-break:break-word;
     }
-    .brand { display: flex; align-items: center; gap: 12px; }
-    .logo img {
-      width: 38px; height: 38px; border-radius: 12px; display:block; box-shadow:0 0 12px #0009;
-      background: #181212;
+
+    .neon{
+      position:relative;
+      text-shadow:
+        0 0 6px rgba(123,210,255,0.45),
+        0 0 18px rgba(123,210,255,0.25),
+        0 0 30px rgba(108,255,178,0.12),
+        0 10px 20px rgba(0,0,0,0.6);
+      display:inline-block;
+      animation:pulse 3.8s ease-in-out infinite, floaty 6s ease-in-out infinite;
     }
-    .brand h1 { font-size: 18px; margin: 0; letter-spacing: .6px; }
-    nav a {
-      padding: 8px 12px; border-radius: 10px; font-weight: 600;
-      transition: background var(--speed) ease;
+
+    @keyframes pulse {
+      0%{filter:drop-shadow(0 0 8px rgba(123,210,255,0.3));}
+      50%{filter:drop-shadow(0 0 28px rgba(123,210,255,0.65));}
+      100%{filter:drop-shadow(0 0 8px rgba(123,210,255,0.3));}
     }
-    nav a:hover { background: rgba(255,255,255,.06); text-decoration: none; }
-    .nav-right { display: flex; justify-content: flex-end; gap: 8px; }
-    .btn {
-      appearance: none; border: 0; cursor: pointer; color: var(--text);
-      padding: 10px 14px; border-radius: 12px; font-weight: 700;
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      box-shadow: var(--shadow);
-      transition: transform var(--speed), filter var(--speed), background var(--speed);
+
+    @keyframes floaty{
+      0%{transform:translateY(0)} 50%{transform:translateY(-6px)} 100%{transform:translateY(0)}
     }
-    .btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
-    .btn:active { transform: translateY(0); }
-    .btn-primary { background: linear-gradient(180deg, rgba(215,38,61,.25), rgba(215,38,61,.13)); color: #fff; }
-    main { max-width: 1100px; margin: 0 auto; padding: 24px 20px 80px; }
-    section { margin: 32px 0 56px; }
-    .hero {
-      display: grid; grid-template-columns: 1.2fr .8fr; gap: 24px; align-items: center;
+
+    .neon span{display:inline-block}
+
+    @keyframes flickerA{0%{opacity:1;filter:blur(0)} 7%{opacity:0.85;filter:blur(0.6px)} 8%{opacity:0.35;filter:blur(1.2px)} 10%{opacity:1;filter:blur(0)} 100%{opacity:1}}
+    @keyframes flickerB{0%{opacity:1} 20%{opacity:0.5} 22%{opacity:1} 100%{opacity:1}}
+
+    .neon::after{
+      content:"";position:absolute;left:5%;right:5%;bottom:-0.18em;height:6px;border-radius:999px;opacity:0.12;
+      background:linear-gradient(90deg,var(--neon1),var(--neon2),var(--accent));filter:blur(8px);
     }
-    .card {
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border: 1px solid rgba(255,255,255,.06);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+
+    .video-container{
+      position:relative;
+      width:clamp(280px,80vw,640px);
+      aspect-ratio:16/9;
+      margin-top:2rem;
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:0 0 25px rgba(123,210,255,0.15), 0 0 60px rgba(108,255,178,0.08);
+      z-index:2;
     }
-    .hero .card { padding: 28px; position: relative; overflow: hidden; }
-    .hero h2 { font-size: clamp(26px, 3.4vw, 44px); margin: 0 0 10px; }
-    .hero p { color: var(--muted); margin: 0 0 18px; }
-    .chip {
-      display: inline-flex; align-items: center; gap: 8px; font-size: 12px; 
-      color: var(--muted); padding: 6px 10px; border-radius: 999px;
-      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08);
+    .video-container iframe{
+      position:absolute;top:0;left:0;width:100%;height:100%;border:0;
     }
-    .toolbar { display: flex; gap: 8px; flex-wrap: wrap; }
-    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
-    .col-12 { grid-column: span 12; }
-    .col-8 { grid-column: span 8; }
-    .col-6 { grid-column: span 6; }
-    .col-4 { grid-column: span 4; }
-    @media (max-width: 900px){ .hero { grid-template-columns: 1fr; } .col-8,.col-6,.col-4{grid-column: span 12;} }
-    .controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
-    .input, textarea, select {
-      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
-      color: var(--text); border-radius: 12px; padding: 10px 12px; width: 100%;
-      outline: none; transition: border var(--speed), box-shadow var(--speed);
+
+    .controls{position:fixed;right:12px;bottom:12px;z-index:4;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+    .btn{background:rgba(255,255,255,0.06);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;color:white;font-weight:600;cursor:pointer;font-size:clamp(0.75rem,3vw,0.9rem)}
+    .btn:active{transform:translateY(1px)}
+
+    @media (max-width:520px){
+      .badge{font-size:clamp(28px,14vw,80px);padding:0.4em 0.5em;}
+      .controls{bottom:8px;right:8px;gap:6px;}
+      .btn{padding:6px 10px;}
     }
-    .input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(139,0,0,.15); }
-    .project-card {
-      position: relative; overflow: hidden; border-radius: 18px; isolation: isolate;
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
-      border: 1px solid rgba(255,255,255,.06);
-      transition: transform .35s cubic-bezier(.2,.8,.2,1), filter .35s ease;
-      box-shadow: var(--shadow);
-    }
-    .project-card:hover { transform: translateY(-4px); filter: brightness(1.03); }
-    .project-media { aspect-ratio: 16/9; background: #0a0d12; display: grid; place-items: center; overflow: hidden; }
-    .project-media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.05); transition: transform .8s ease; }
-    .project-card:hover .project-media img { transform: scale(1.12) rotate(.3deg); }
-    .project-body { padding: 14px 14px 16px; }
-    .project-title { margin: 4px 0 6px; font-size: 18px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 0 0;}
-    .tag { font-size: 11px; padding: 4px 8px; border-radius: 999px; color: var(--muted); background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); }
-    .meta { color: var(--muted); font-size: 12px; }
-    .empty { text-align: center; color: var(--muted); padding: 24px 6px; border: 1px dashed rgba(255,255,255,.12); border-radius: 16px; }
-    dialog.modal { border: 0; padding: 0; border-radius: 18px; background: var(--bg-soft); color: var(--text); max-width: min(900px, 92vw); }
-    .modal::backdrop { background: rgba(4,7,10,.7); backdrop-filter: blur(3px); }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,.06); }
-    .modal-body { padding: 0; }
-    .gallery { position: relative; overflow: hidden; }
-    .gallery img { width: 100%; height: 52vh; object-fit: cover; display: block; }
-    .gallery .navbtn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(6,12,16,.6); border: 1px solid rgba(255,255,255,.1); padding: 10px 12px; border-radius: 12px; }
-    .gallery .prev { left: 10px; } .gallery .next { right: 10px; }
-    .modal-content { padding: 16px; }
-    .accent-picker { display: flex; gap: 8px; flex-wrap: wrap; }
-    .swatch { width: 26px; height: 26px; border-radius: 999px; border: 1px solid rgba(255,255,255,.2); cursor: pointer; box-shadow: inset 0 0 0 2px rgba(0,0,0,.15); }
-    .reveal { opacity: 0; transform: translateY(8px) scale(.98); transition: opacity .6s ease, transform .6s ease; }
-    .reveal.visible { opacity: 1; transform: none; }
-    footer { color: var(--muted); text-align: center; padding: 40px 16px 30px; }
   </style>
 </head>
 <body>
-  <canvas id="particles-bg"></canvas>
+  <canvas id="bg"></canvas>
 
-  <header>
-    <div class="nav">
-      <div class="brand">
-        <div class="logo">
-          <!-- PODAJ SWÓJ LINK DO LOGO! -->
-          <img src="https://i.imgur.com/jgA4YaX.jpeg" alt="Logo">
-        </div>
-        <h1>szajzer.xyz</h1>
-      </div>
-      <nav>
-        <a href="#home">Start</a>
-        <a href="#projects">Projekty</a>
-        <a href="#about">O stronie</a>
-      </nav>
-      <div class="nav-right">
-        <button class="btn" id="ytBtn" title="YouTube">YouTube</button>
-        <button class="btn" id="dcBtn" title="Discord">Discord</button>
-      </div>
+  <main class="center">
+    <div class="badge">
+      <div class="neon" id="neonText" aria-hidden="true"></div>
     </div>
-  </header>
-
-  <main>
-    <!-- HERO -->
-    <section id="home" class="hero reveal">
-      <div class="card">
-        <span class="chip">⚡ szajzer.xyz • discord.gg/lodzik</span>
-        <h2>Pozdro 600</h2>
-        <p>Wszystkie moje <strong>projekty</strong> w jednym miejscu: pobieraj, testuj.<br/>Nie odpowiadam za użycie.</p>
-        <div class="toolbar">
-          <a class="btn btn-primary" href="#projects">Przejdź do projektów</a>
-        </div>
-      </div>
-      <div class="card" style="padding: 22px;">
-        <div class="controls">
-          <input id="search" class="input" placeholder="Szukaj w tytułach i opisach… (⌘/Ctrl + K)" />
-          <select id="sort" class="input" style="max-width: 220px;">
-            <option value="date-desc">Najnowsze</option>
-            <option value="date-asc">Najstarsze</option>
-            <option value="title-asc">Tytuł A→Z</option>
-            <option value="title-desc">Tytuł Z→A</option>
-          </select>
-        </div>
-        <div class="tags" id="tagBar"></div>
-      </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section id="projects" class="reveal">
-      <div class="grid" id="projectGrid"></div>
-      <div id="emptyState" class="empty" style="display:none;">Brak projektów. Dodaj coś w kodzie JS.</div>
-    </section>
-
-    <!-- POSTY O HACKOWANIU -->
-    <section id="hacking-posts" style="max-width: 900px; margin: 0 auto 40px; padding: 0 16px;">
-      <h2 style="font-family:monospace; color:#d7263d; margin-bottom:18px; margin-top:36px; letter-spacing:.5px;">Ważne informacje</h2>
-      <div id="posts-list"></div>
-    </section>
-
-    <footer>
-      <kbd>⌘/Ctrl</kbd>+<kbd>K</kbd> — fokus szukajki, <kbd>/</kbd> — szybkie wyszukiwanie, <kbd>G</kbd> — idź do góry.<br>
-      <br>
-      <b>UWAGA:</b> Strona edukacyjna, nie odpowiadam za użycie narzędzi.
-      <div style="margin-top:26px; color:#9aa4b2; font-size:14px; opacity:0.85;">
-        Strona stworzona przez <b>kxzzcer</b> &copy; 2025
-      </div>
-    </footer>
+    <div class="video-container">
+      <!-- Podmień ID filmu w URL na dowolny -->
+<iframe width="1840" height="1035" src="https://www.youtube.com/embed/S-KAdxwA06Y" title="Zmadowany dzieciak o wyjebke" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>    </div>
   </main>
 
-  <dialog class="modal" id="viewer">
-    <div class="modal-header">
-      <strong id="viewerTitle">Podgląd</strong>
-      <div>
-        <a class="btn btn-primary" id="downloadBtn" style="display:none" target="_blank" rel="noopener">Pobierz</a>
-        <button class="btn" id="closeModal">Zamknij</button>
-      </div>
-    </div>
-    <div class="modal-body">
-      <div class="gallery">
-        <button class="navbtn prev" aria-label="Poprzednie">◀</button>
-        <img id="viewerImg" alt="Podgląd" />
-        <button class="navbtn next" aria-label="Następne">▶</button>
-      </div>
-      <div class="modal-content">
-        <div id="viewerMeta" class="meta" style="margin-bottom:8px"></div>
-        <div id="viewerDesc"></div>
-      </div>
-    </div>
-  </dialog>
+  <div class="controls">
+    <button class="btn" id="speed">Szybkość ×1</button>
+    <button class="btn" id="download">Pobierz .html</button>
+  </div>
+
   <script>
-    // === PARTICLES BACKGROUND === //
-    const canvas = document.getElementById('particles-bg');
-    const ctx = canvas.getContext('2d');
-    let W = 0, H = 0;
-    let particles = [];
-    function resizeParticles() {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-      // More particles for big screens
-      const count = Math.floor((W * H) / 5500);
-      particles = Array.from({length: count}, () => ({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        r: 1.2 + Math.random() * 2.8,
-        vx: (Math.random() - 0.5) * 0.33,
-        vy: (Math.random() - 0.5) * 0.33,
-        color: Math.random()>0.7 ? "rgba(215,38,61,0.24)" : "rgba(255,255,255,0.13)"
-      }));
-    }
-    function stepParticles() {
-      ctx.clearRect(0,0,W,H);
-      for (const p of particles) {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0) p.x = W;
-        if (p.x > W) p.x = 0;
-        if (p.y < 0) p.y = H;
-        if (p.y > H) p.y = 0;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, 2 * Math.PI);
-        ctx.fillStyle = p.color;
-        ctx.shadowColor = "#d7263d";
-        ctx.shadowBlur = 12;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      }
-      // lines
-      for (let i=0;i<particles.length;i++) {
-        for (let j=i+1;j<particles.length;j++){
-          const a = particles[i], b = particles[j];
-          const dx = a.x-b.x, dy = a.y-b.y;
-          const d2 = dx*dx+dy*dy;
-          if (d2 < 110*110){
-            ctx.beginPath();
-            ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
-            ctx.strokeStyle = "rgba(215,38,61," + (0.07 + Math.random()*0.04) + ")";
-            ctx.lineWidth = 1;
-            ctx.stroke();
-          }
+    const text = 'szajz3er - loczek';
+    const container = document.getElementById('neonText');
+
+    function build() {
+      container.innerHTML='';
+      for (let i=0;i<text.length;i++){
+        const ch = text[i];
+        const span = document.createElement('span');
+        span.textContent = ch;
+        const r = Math.random();
+        if (ch.trim() === ''){
+          span.style.width = '0.35em';
+        } else {
+          span.style.animation = (r>0.85? 'flickerA 3s linear infinite': (r>0.5? 'flickerB 4s linear infinite' : 'none'));
+          span.style.animationDelay = (Math.random()*2)+'s';
+          span.style.padding='0 2px';
         }
-      }
-      requestAnimationFrame(stepParticles);
-    }
-    window.addEventListener('resize', resizeParticles);
-    resizeParticles();
-    stepParticles();
-
-    // === PRZYKŁADOWE PROJEKTY === //
-    const seedProjects = [
-      {
-        id: cryptoId(),
-        title: "Discord Token Stealer",
-        desc: "Stealer tokenów Discorda, napisany w Pythonie. Wysyła znalezione tokeny na webhook Discorda.",
-        tags: ["Discord","Stealer","Python","Malware"],
-        images: [
-          "https://i.imgur.com/MwGA92U.png",
-          "https://i.imgur.com/WVca0JL.png"
-        ],
-        cover: "",
-        date: Date.now() - 1000*60*60*24*2,
-        download: ""
-      },
-      {
-        id: cryptoId(),
-        title: "Discord Tool",
-        desc: "Discord Tool to zestaw narzędzi do automatyzacji zadań na Discordzie, takich jak masowe wysyłanie wiadomości, zarządzanie serwerami i użytkownikami.",
-        tags: ["Discord","Python"],
-        images: [
-          "https://i.imgur.com/c9wvoK7.png"
-        ],
-        cover: "",
-        date: Date.now() - 1000*60*60*24*7,
-        download: "files/bot.rar"
-      },
-      {
-        id: cryptoId(),
-        title: "Instagram Follow Bot - off",
-        desc: "Bot do automatycznego obserwowania użytkowników na Instagramie.",
-        tags: ["Python"],
-        images: [
-          "https://i.imgur.com/H5D4Ryl.png"
-        ],
-        cover: "",
-        date: Date.now() - 1000*60*60*24*15,
-        download: "files/telegram_session_stealer.zip"
-      }
-      // DODAJ WIĘCEJ PROJEKTÓW WG TEGO WZORU
-    ];
-
-    // === STAN === //
-    const state = {
-      projects: seedProjects.slice(),
-      filtered: [],
-      tags: new Set(),
-      current: null,
-      currentImageIndex: 0
-    };
-
-    function cryptoId(){
-      if (crypto && crypto.randomUUID) return crypto.randomUUID();
-      return 'id-' + Math.random().toString(36).slice(2, 10);
-    }
-    const $ = sel => document.querySelector(sel);
-    const $$ = sel => Array.from(document.querySelectorAll(sel));
-
-    function escapeHtml(str=''){
-      return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[m]));
-    }
-    function miniMarkdown(input=''){
-      return escapeHtml(input)
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/_(.*?)_/g, '<em>$1</em>')
-        .replace(/`([^`]+)`/g, '<code>$1</code>')
-        .replace(/\n/g, '<br/>');
-    }
-    function timeAgo(ts){
-      const d = Math.round((Date.now()-ts)/1000);
-      if (d < 60) return `${d}s temu`;
-      const m = Math.round(d/60); if (m<60) return `${m}m temu`;
-      const h = Math.round(m/60); if (h<24) return `${h}h temu`;
-      const days = Math.round(h/24); if (days<30) return `${days}d temu`;
-      const months = Math.round(days/30); if (months<12) return `${months} mies. temu`;
-      const years = Math.round(months/12); return `${years} l. temu`;
-    }
-    function refreshTags(){
-      state.tags = new Set(state.projects.flatMap(p => p.tags || []));
-    }
-    function applyFilters(){
-      const q = $('#search').value.toLowerCase().trim();
-      const sort = $('#sort').value;
-      const activeTags = $$('#tagBar .tag.active').map(t => t.dataset.tag);
-      let arr = [...state.projects];
-      if (q){ arr = arr.filter(p => (p.title+" "+p.desc).toLowerCase().includes(q)); }
-      if (activeTags.length){ arr = arr.filter(p => activeTags.every(t => (p.tags||[]).includes(t))); }
-      switch (sort){
-        case 'date-asc': arr.sort((a,b)=>a.date-b.date); break;
-        case 'title-asc': arr.sort((a,b)=>a.title.localeCompare(b.title)); break;
-        case 'title-desc': arr.sort((a,b)=>b.title.localeCompare(a.title)); break;
-        default: arr.sort((a,b)=>b.date-a.date);
-      }
-      state.filtered = arr;
-      renderProjects();
-    }
-    function renderTagBar(){
-      refreshTags();
-      const bar = $('#tagBar'); bar.innerHTML = '';
-      if (!state.tags.size){ bar.style.display='none'; return; } else { bar.style.display='flex'; }
-      for (const t of [...state.tags].sort()){
-        const el = document.createElement('button');
-        el.className = 'tag'; el.textContent = '#'+t; el.dataset.tag = t;
-        el.onclick = ()=>{ el.classList.toggle('active'); applyFilters(); };
-        bar.appendChild(el);
+        container.appendChild(span);
       }
     }
-    function renderProjects(){
-      const grid = $('#projectGrid');
-      grid.innerHTML = '';
-      const data = state.filtered.length ? state.filtered : state.projects;
-      $('#emptyState').style.display = data.length ? 'none' : 'block';
-      data.forEach(p => {
-        const card = document.createElement('article');
-        card.className = 'project-card reveal col-4';
-        card.innerHTML = `
-          <div class="project-media">${renderCover(p)}</div>
-          <div class="project-body">
-            <div class="project-title">
-              <span>${escapeHtml(p.title)}</span>
-              <span class="meta">${timeAgo(p.date)}</span>
-            </div>
-            <div class="tags">${(p.tags||[]).map(t=>`<span class='tag'>#${escapeHtml(t)}</span>`).join(' ')}</div>
-            <div class="meta" style="margin-top:5px;">
-              <button class="btn btn-primary" onclick="event.stopPropagation();window.open('${p.download}','_blank')">Pobierz</button>
-            </div>
-          </div>`;
-        card.addEventListener('click', ()=> openViewer(p));
-        grid.appendChild(card);
+    build();
+
+    const canvas = document.getElementById('bg');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles;
+    function resize(){ W=canvas.width = innerWidth; H=canvas.height=innerHeight; initParticles(); }
+    window.addEventListener('resize', resize, {passive:true});
+
+    function initParticles(){
+      particles = [];
+      const count = Math.round((W*H)/70000);
+      for(let i=0;i<count;i++){
+        particles.push({
+          x: Math.random()*W,
+          y: Math.random()*H,
+          r: Math.random()*1.8+0.4,
+          vx: (Math.random()-0.5)*0.4,
+          vy: (Math.random()-0.5)*0.4,
+          hue: 180 + Math.random()*80
+        });
+      }
+    }
+
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      for(const p of particles){
+        p.x += p.vx; p.y += p.vy;
+        if(p.x< -10) p.x = W+10; if(p.x>W+10) p.x=-10;
+        if(p.y< -10) p.y = H+10; if(p.y>H+10) p.y=-10;
+        ctx.beginPath();
+        ctx.fillStyle = `hsla(${p.hue},85%,65%,${0.06 + (p.r/3)})`;
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    }
+    resize(); draw();
+
+    const speedBtn = document.getElementById('speed');
+    let speed = 1;
+    speedBtn.addEventListener('click', ()=>{
+      speed = speed===1?1.6:1; speedBtn.textContent = `Szybkość ×${speed===1?1:1.6}`;
+      const spans = container.querySelectorAll('span');
+      spans.forEach((s)=>{
+        const base = s.style.animation || '';
+        if(base.includes('flickerA')) s.style.animationDuration = (3/speed)+'s';
+        if(base.includes('flickerB')) s.style.animationDuration = (4/speed)+'s';
       });
-      revealNow();
-    }
-    function renderCover(p){
-      const src = p.cover || (p.images && p.images[0]);
-      if (!src) return `<div style="color:var(--muted); padding:22px;">Brak obrazu</div>`;
-      return `<img src="${escapeHtml(src)}" alt="${escapeHtml(p.title)}" loading="lazy"/>`;
-    }
-    function openViewer(p){
-      state.current = p; state.currentImageIndex = 0;
-      $('#viewerTitle').textContent = p.title;
-      $('#viewerMeta').innerHTML = `${(p.tags||[]).map(t=>`<span class='tag'>#${escapeHtml(t)}</span>`).join(' ')} · <span class='meta'>${new Date(p.date).toLocaleString()}</span>`;
-      $('#viewerDesc').innerHTML = miniMarkdown(p.desc || '');
-      $('#downloadBtn').style.display = p.download ? 'inline-block' : 'none';
-      if (p.download) $('#downloadBtn').href = p.download;
-      updateViewerImage();
-      $('#viewer').showModal();
-    }
-    function updateViewerImage(){
-      const {current:c} = state; if (!c) return;
-      const imgs = c.images && c.images.length ? c.images : [c.cover].filter(Boolean);
-      $('#viewerImg').src = imgs[state.currentImageIndex % imgs.length];
-    }
-    window.addEventListener('keydown', (e)=>{
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); $('#search').focus(); }
-      if (e.key === '/'){ e.preventDefault(); $('#search').focus(); }
-      if (e.key.toLowerCase() === 'g'){ window.scrollTo({top:0, behavior:'smooth'}); }
-      if (e.key === 'Escape'){ const dlg=$('#viewer'); if (dlg.open) dlg.close(); }
-      if (e.key === 'ArrowRight'){ if ($('#viewer').open){ state.currentImageIndex++; updateViewerImage(); }}
-      if (e.key === 'ArrowLeft'){ if ($('#viewer').open){ state.currentImageIndex = Math.max(0, state.currentImageIndex-1); updateViewerImage(); }}
-    });
-    $('#closeModal').onclick = ()=> $('#viewer').close();
-    $('.gallery .next').onclick = ()=>{ state.currentImageIndex++; updateViewerImage(); }
-    $('.gallery .prev').onclick = ()=>{ state.currentImageIndex = Math.max(0, state.currentImageIndex-1); updateViewerImage(); }
-
-    function revealNow(){ $$('.reveal').forEach(el=> el.classList.add('visible')); }
-    function init(){
-      renderTagBar();
-      applyFilters();
-      revealNow();
-    }
-    init();
-
-    document.getElementById('ytBtn').addEventListener('click', function() {
-        window.open('https://www.youtube.com/@kxzzcer', '_blank');
-    });
-    document.getElementById('dcBtn').addEventListener('click', function() {
-        window.open('https://discord.gg/ZaSmhaAJPy', '_blank');
     });
 
-    // === POSTY O HACKOWANIU ===
-    const posts = [
-      {
-        title: "Jak działa Discord Token Stealer?",
-        date: "2025-10-05",
-        desc: "Tokeny Discorda to unikalne identyfikatory pozwalające na przejęcie konta bez hasła. Stealery wyszukują je w plikach przeglądarek i aplikacji, a następnie wysyłają na webhook. Zawsze testuj swoje narzędzia na własnych kontach!",
-        tags: ["Discord", "Token", "Stealer"]
-      },
-      {
-        title: "Obfuskacja kodu – jak utrudnić detekcję?",
-        date: "2025-09-28",
-        desc: "Obfuskacja to proces zamiany przejrzystego kodu na trudny do analizy. Używaj narzędzi takich jak pyobfuscate, UPX (dla EXE), zmieniaj nazwy zmiennych i dodawaj bezużyteczny kod. Pamiętaj: żaden sposób nie chroni w 100%!",
-        tags: ["Obfuscation", "Python", "Security"]
-      },
-      {
-        title: "Zasada: nie testuj na produkcji!",
-        date: "2025-09-20",
-        desc: "Zawsze sprawdzaj swoje malware/stealery na maszynie wirtualnej (VMWare, VirtualBox, Sandboxie). Nigdy na swoim głównym systemie! Snapshot = twój przyjaciel.",
-        tags: ["VM", "Testing", "Safety"]
-      },
-      {
-        title: "Najlepsze praktyki z builderami",
-        date: "2025-09-10",
-        desc: "Builder to narzędzie generujące malware pod twoje parametry (np. webhook). Dobre buildery powinny automatycznie zmieniać nazwę klasy, ikonę, zaszyfrować payload i dodać losowe śmieci do kodu.",
-        tags: ["Builder", "Automation"]
-      }
-    ];
-
-    function renderPosts() {
-      const postsList = document.getElementById("posts-list");
-      postsList.innerHTML = posts.map(post => `
-        <div style="background:rgba(255,255,255,0.04);border:1px solid #222;border-radius:12px;padding:18px 20px 14px;margin-bottom:20px;box-shadow:0 2px 8px #0003;">
-          <div style="font-size:16px;font-weight:bold;color:#fff;letter-spacing:.5px;">${post.title}</div>
-          <div style="color:#9aa4b2;font-size:13px;margin-bottom:8px;">${post.date} ${post.tags.map(t=>`<span style="background:#19141a;color:#d7263d;padding:2px 8px 2px 8px;border-radius:8px;margin-left:7px;font-size:11px;">#${t}</span>`).join('')}</div>
-          <div style="color:#dadada;font-size:15px;">${post.desc}</div>
-        </div>
-      `).join('');
-    }
-    renderPosts();
+    document.getElementById('download').addEventListener('click', ()=>{
+      const blob = new Blob([document.documentElement.outerHTML], {type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'szajz3er-loczek.html'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
   </script>
 </body>
 </html>
