@@ -1,199 +1,286 @@
-<!doctype html>
-<html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>szajzer.xyz</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg1:#0b1020;
-      --bg2:#071426;
-      --neon1:#6cffb2;
-      --neon2:#7bd2ff;
-      --accent:#ffd36b;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;padding:0;overflow-x:hidden}
-    body{
-      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: radial-gradient(1200px 600px at 10% 10%, rgba(123,210,255,0.06), transparent),
-                  radial-gradient(900px 500px at 90% 80%, rgba(108,255,178,0.04), transparent),
-                  linear-gradient(180deg,var(--bg1),var(--bg2));
-      color:#fff;
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
-      min-height:100vh;
-    }
-
-    canvas#bg{
-      position:fixed;inset:0;z-index:0;display:block;width:100%;height:100%;
-    }
-
-    .center{
-      position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-      padding:2rem;
-      width:100%;max-width:100%;
-    }
-
-    .badge{
-      font-family:Orbitron, sans-serif;
-      font-weight:900;
-      font-size:clamp(32px,12vw,140px);
-      letter-spacing:0.02em;
-      color:var(--neon2);
-      text-transform:lowercase;
-      line-height:1.1;
-      padding:0.6em 0.9em;
-      -webkit-filter:drop-shadow(0 6px 18px rgba(0,0,0,0.6));
-      word-break:break-word;
-    }
-
-    .neon{
-      position:relative;
-      text-shadow:
-        0 0 6px rgba(123,210,255,0.45),
-        0 0 18px rgba(123,210,255,0.25),
-        0 0 30px rgba(108,255,178,0.12),
-        0 10px 20px rgba(0,0,0,0.6);
-      display:inline-block;
-      animation:pulse 3.8s ease-in-out infinite, floaty 6s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%{filter:drop-shadow(0 0 8px rgba(123,210,255,0.3));}
-      50%{filter:drop-shadow(0 0 28px rgba(123,210,255,0.65));}
-      100%{filter:drop-shadow(0 0 8px rgba(123,210,255,0.3));}
-    }
-
-    @keyframes floaty{
-      0%{transform:translateY(0)} 50%{transform:translateY(-6px)} 100%{transform:translateY(0)}
-    }
-
-    .neon span{display:inline-block}
-
-    @keyframes flickerA{0%{opacity:1;filter:blur(0)} 7%{opacity:0.85;filter:blur(0.6px)} 8%{opacity:0.35;filter:blur(1.2px)} 10%{opacity:1;filter:blur(0)} 100%{opacity:1}}
-    @keyframes flickerB{0%{opacity:1} 20%{opacity:0.5} 22%{opacity:1} 100%{opacity:1}}
-
-    .neon::after{
-      content:"";position:absolute;left:5%;right:5%;bottom:-0.18em;height:6px;border-radius:999px;opacity:0.12;
-      background:linear-gradient(90deg,var(--neon1),var(--neon2),var(--accent));filter:blur(8px);
-    }
-
-    .video-container{
-      position:relative;
-      width:clamp(280px,80vw,640px);
-      aspect-ratio:16/9;
-      margin-top:2rem;
-      border-radius:16px;
-      overflow:hidden;
-      box-shadow:0 0 25px rgba(123,210,255,0.15), 0 0 60px rgba(108,255,178,0.08);
-      z-index:2;
-    }
-    .video-container iframe{
-      position:absolute;top:0;left:0;width:100%;height:100%;border:0;
-    }
-
-    .controls{position:fixed;right:12px;bottom:12px;z-index:4;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-    .btn{background:rgba(255,255,255,0.06);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;color:white;font-weight:600;cursor:pointer;font-size:clamp(0.75rem,3vw,0.9rem)}
-    .btn:active{transform:translateY(1px)}
-
-    @media (max-width:520px){
-      .badge{font-size:clamp(28px,14vw,80px);padding:0.4em 0.5em;}
-      .controls{bottom:8px;right:8px;gap:6px;}
-      .btn{padding:6px 10px;}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/index.css">
+    <link rel="icon" type="image/x-icon" href="https://play-lh.googleusercontent.com/_TNbiYKasPy_isTSEg2_UEzVaev4F8fO2lLunsHJ8_Ux2g3OzkSZyzpqvJG1woSj-WD4=w240-h480-rw">
+    <title>mObywatel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
 </head>
 <body>
-  <canvas id="bg"></canvas>
 
-  <main class="center">
-    <div class="badge">
-      <div class="neon" id="neonText" aria-hidden="true"></div>
+    
+    
+    
+    
+    
+    
+   
+    <img src="https://play-lh.googleusercontent.com/_TNbiYKasPy_isTSEg2_UEzVaev4F8fO2lLunsHJ8_Ux2g3OzkSZyzpqvJG1woSj-WD4" class="logo">
+    <p class="logo_text">FmOBywatel 📲</p>
+
+    <p class="warning"> Pamiętaj ta strona służy do generowania dowodów w celach edukacyjnych lub do wykorzystania w produkcjach filmowych, używanie wygenerowanego dowodu jako oryginału wystawionego przez państwo jest nielegalne 🪪
+    PRZED KORZYSTANIEM PRZECZYTAJ REGULAMIN❗</p>
+
+    <div class="guide_holder">
+        <div class="top_holder">
+            <p class="guide_title">Instrukcja</p>
+            <img class="arrow" src="images/1GUMnTn.png">
+        </div>
+        <div class="guide_text">
+            <span style="font-size: 17px; font-weight: 500;">Dla systemu IOS:</span><br>
+            <ul>
+                <li>Upewnij się, że używasz przeglądarki Safari</li>
+                <li>Uzupełnij dane i kliknij wejdź</li>
+                <li>Naciśji udostępnij -> Do Ekranu głównego</li>
+            </ul>
+            <span style="font-size: 17px; font-weight: 500;">Dla systemu Android:</span>
+            <ul>
+                <li>Upewnij się, że używasz przeglądarki google lub chrome</li>
+                <li>Uzupełnij dane i kliknij wejdź</li>
+                <li>Naciśji 3 kropki -> Dodaj do ekranu głównego</li>
+            </ul>
+        </div>
     </div>
-    <div class="video-container">
-      <!-- Podmień ID filmu w URL na dowolny -->
-<iframe width="1840" height="1035" src="https://www.youtube.com/embed/S-KAdxwA06Y" title="Zmadowany dzieciak o wyjebke" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>    </div>
-  </main>
+
+    <div class="upload">
+        <p class="error">To pole jest wymagane</p>
+        <img class="upload_uploaded">
+        <div class="upload_uploading"></div>
+        <div class="upload_grid">
+            
+            <p class="upload_text">Dodaj zdjęcie</p>
+        </div>
+    </div>
+
+    <div class="input_holder">
+        <input type="text" id="name" class="input" placeholder="">
+        <span class="placeholder">Imię (imiona)</span>
+        <p class="error">To pole jest wymagane</p>
+    </div>
+ 
+    <div class="input_holder">
+        <input type="text" id="surname" class="input" placeholder="">
+        <span class="placeholder">Nazwisko</span>
+        <p class="error">To pole jest wymagane</p>
+    </div>
+
+    <p class="top_info">Płeć</p>
+    <div class="selector_box">
+        <div class="selected_grid">
+            <p class="selector_text selected_text">Mężczyzna</p>
+            <img class="selected_arrow" src="images/1GUMnTn.png">
+        </div>
+        <div class="option_box">
+            <div class="selector_option" id="m">
+                Mężczyzna
+            </div>
+            <div class="selector_option" id="k">
+                Kobieta
+            </div>
+        </div>
+    </div>
+
+    <div class="date">
+        <p class="top_info">Data urodzenia</p>
+        <div class="date_grid">
+            <input class="date_input" placeholder="DD" type="number">
+    
+            </input>
+            <input class="date_input" placeholder="MM" type="number">
+    
+            </input>
+            <input class="date_input" placeholder="YYYY" type="number">
+    
+            </input>
+        </div>
+        <p class="error">Wprowadź prawidłową datę</p>
+    </div>
+
+    <div class="input_holder">
+        <input type="text" id="nationality" class="input" placeholder="">
+        <span class="placeholder">Obywatelstwo</span>
+        <p class="error">To pole jest wymagane</p>
+    </div>
+
+    <div class="input_holder">
+        <input type="text" id="familyName" class="input" placeholder="">
+        <span class="placeholder">Nazwisko rodowe</span>
+        <p class="error">To pole jest wymagane</p>
+    </div>
+
+    <div class="input_holder">
+        <input type="text" id="fathersFamilyName" class="input" placeholder="">
+        <span class="placeholder">Nazwisko rodowe ojca</span>
+        <p class="error">To pole jest wymagane</p>
+    </div>
+
+    <div class="input_holder">
+        <input type="text" id="mothersFamilyName" class="input" placeholder="">
+        <span class="placeholder">Nazwisko rodowe matki</span>
+        <p class="error">To pole jest wymagane</p>
+    </div>
+
+    
+    <div class="input_holder">
+        <input type="text" id="motherName" class="input" placeholder="">
+        <span class="placeholder">Imię matki</span>
+        <p class="error">To pole jest wymagane</p>
+    </div>
+    
+    <div class="input_holder">
+        <input type="text" id="fatherName" class="input" placeholder="">
+        <span class="placeholder">Imię ojca</span>
+        <p class="error">To pole jest wymagane</p>
+    </div>
+    
+
+    <p class="subtext">Miejsce zamieszkania</p>
+
+    <div class="input_holder">
+        <input type="text" id="birthPlace" class="input" placeholder="">
+        <span class="placeholder">Miejsce urodzenia</span>
+        <p class="error">To pole jest wymagane</p>
+    </div>
+
+    <div class="input_holder">
+        <input type="text" id="countryOfBirth" class="input" placeholder="">
+        <span class="placeholder">Kraj urodzenia</span>
+        <p class="error">To pole jest wymagane</p>
+    </div>
+
+    <div class="input_holder">
+        <input type="text" id="adress1" class="input" placeholder="">
+        <span class="placeholder">Ulica i numer domu</span>
+        <p class="error">To pole jest wymagane</p>
+    </div>
+
+    <div class="input_holder">
+        <input type="text" id="adress2" class="input" placeholder="">
+        <span class="placeholder">Kod pocztowy</span>
+        <p class="error">To pole jest wymagane</p>
+    </div>
+
+    <div class="input_holder">
+        <input type="text" id="city" class="input" placeholder="">
+        <span class="placeholder">Miasto</span>
+        <p class="error">To pole jest wymagane</p>
+    </div>
+
+    <div class="input_holder">
+        <input type="text" id="seria_numer" class="input" placeholder="">
+        <span class="placeholder">Seria i numer dowodu:</span>
+        <p class="error">To pole jest wymagane</p>
+    </div>
+
+    <div class="input_holder">
+        <input type="text" id="wydany" class="input" placeholder="">
+        <span class="placeholder">Data wydania dokumentu</span>
+        <p class="error">To pole jest wymagane</p>
+    </div>
+
+    <div class="input_holder">
+        <input type="text" id="waznosc" class="input" placeholder="">
+        <span class="placeholder">Data ważności dokumentu</span>
+        <p class="error">To pole jest wymagane</p>
+      </div>
+
+      <div style="text-align: center; margin-top: 20px;">
+        <button id="generate-dates-btn" style="
+          padding: 10px 20px;
+          background-color: #1976d2;
+          color: white;
+          font-size: 16px;
+          border: none;
+          border-radius: 10px;
+          cursor: pointer;
+        ">
+          Generuj daty
+        </button>
+      </div>
+      
+
+    
+
+    <a class="go">wejdź</a>
+    
+
+    
+
+    <script src="assets/index.js"></script>
+    <script src="assets/manifest.js"></script>
+    <script>
+
+function generateDocumentNumber() {
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const series = Array.from({ length: 3 }, () =>
+    letters[Math.floor(Math.random() * letters.length)]
+  ).join("");
+
+  const number = Math.floor(100000 + Math.random() * 900000); // 6-cyfrowy numer
+  return `${series} ${number}`;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("seria_numer");
+  if (input) {
+    input.value = generateDocumentNumber();
+  }
+});
 
 
-  <script>
-    const text = 'szajz3er - loczek';
-    const container = document.getElementById('neonText');
 
-    function build() {
-      container.innerHTML='';
-      for (let i=0;i<text.length;i++){
-        const ch = text[i];
-        const span = document.createElement('span');
-        span.textContent = ch;
-        const r = Math.random();
-        if (ch.trim() === ''){
-          span.style.width = '0.35em';
-        } else {
-          span.style.animation = (r>0.85? 'flickerA 3s linear infinite': (r>0.5? 'flickerB 4s linear infinite' : 'none'));
-          span.style.animationDelay = (Math.random()*2)+'s';
-          span.style.padding='0 2px';
-        }
-        container.appendChild(span);
-      }
+        function getRandomDateWithinLastYears(years = 2) {
+    const now = new Date();
+    const past = new Date();
+    past.setFullYear(now.getFullYear() - years);
+    return new Date(past.getTime() + Math.random() * (now.getTime() - past.getTime()));
+}
+
+function formatDate(date) {
+    const dd = String(date.getDate()).padStart(2, '0');
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const yyyy = date.getFullYear();
+    return `${dd}.${mm}.${yyyy}`;
+}
+
+function calculateDates() {
+    const day = parseInt(document.querySelectorAll('.date_input')[0].value);
+    const month = parseInt(document.querySelectorAll('.date_input')[1].value);
+    const year = parseInt(document.querySelectorAll('.date_input')[2].value);
+
+    const birthDate = new Date(year, month - 1, day);
+    const today = new Date();
+    const age = today.getFullYear() - birthDate.getFullYear() -
+               (today.getMonth() < birthDate.getMonth() || 
+               (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate()) ? 1 : 0);
+
+    if (isNaN(age) || age < 18) {
+        return;
     }
-    build();
 
-    const canvas = document.getElementById('bg');
-    const ctx = canvas.getContext('2d');
-    let W, H, particles;
-    function resize(){ W=canvas.width = innerWidth; H=canvas.height=innerHeight; initParticles(); }
-    window.addEventListener('resize', resize, {passive:true});
+    const wydany = getRandomDateWithinLastYears(2);
+    const waznosc = new Date(wydany);
+    waznosc.setFullYear(wydany.getFullYear() + 5);
 
-    function initParticles(){
-      particles = [];
-      const count = Math.round((W*H)/70000);
-      for(let i=0;i<count;i++){
-        particles.push({
-          x: Math.random()*W,
-          y: Math.random()*H,
-          r: Math.random()*1.8+0.4,
-          vx: (Math.random()-0.5)*0.4,
-          vy: (Math.random()-0.5)*0.4,
-          hue: 180 + Math.random()*80
-        });
-      }
-    }
+    document.getElementById("wydany").value = formatDate(wydany);
+    document.getElementById("waznosc").value = formatDate(waznosc);
+}
 
-    function draw(){
-      ctx.clearRect(0,0,W,H);
-      for(const p of particles){
-        p.x += p.vx; p.y += p.vy;
-        if(p.x< -10) p.x = W+10; if(p.x>W+10) p.x=-10;
-        if(p.y< -10) p.y = H+10; if(p.y>H+10) p.y=-10;
-        ctx.beginPath();
-        ctx.fillStyle = `hsla(${p.hue},85%,65%,${0.06 + (p.r/3)})`;
-        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-        ctx.fill();
-      }
-      requestAnimationFrame(draw);
-    }
-    resize(); draw();
+document.addEventListener("DOMContentLoaded", () => {
+    calculateDates(); // Automatyczne uzupełnienie po załadowaniu (jeśli pola daty urodzenia są wypełnione)
+});
 
-    const speedBtn = document.getElementById('speed');
-    let speed = 1;
-    speedBtn.addEventListener('click', ()=>{
-      speed = speed===1?1.6:1; speedBtn.textContent = `Szybkość ×${speed===1?1:1.6}`;
-      const spans = container.querySelectorAll('span');
-      spans.forEach((s)=>{
-        const base = s.style.animation || '';
-        if(base.includes('flickerA')) s.style.animationDuration = (3/speed)+'s';
-        if(base.includes('flickerB')) s.style.animationDuration = (4/speed)+'s';
-      });
-    });
+document.getElementById("generate-dates-btn").addEventListener("click", () => {
+    calculateDates();
+});
 
-    document.getElementById('download').addEventListener('click', ()=>{
-      const blob = new Blob([document.documentElement.outerHTML], {type:'text/html'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = 'szajz3er-loczek.html'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-    });
-  </script>
+
+
+
+
+
+
+
+    </script>
+    
+
 </body>
-</html>
