@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Fotki</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="gallery">
+    <img src="https://i.imgur.com/HQjnWfe.png" alt="Zdjęcie 1">
+    <img src="https://i.imgur.com/qSQELGj.png" alt="Zdjęcie 2">
+    <img src="https://i.imgur.com/j8SxNy4.png" alt="Zdjęcie 3">
+    <img src="https://i.imgur.com/fev0L9x.png" alt="Zdjęcie 4">
+    <img src="https://i.imgur.com/PClpgvq.png" alt="Zdjęcie 5">
+  </div>
+
+</body>
+</html>
