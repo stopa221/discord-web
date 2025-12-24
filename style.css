@@ -1,0 +1,322 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Kolory */
+:root {
+    --bg: #0f0f0f;
+    --text: #f2f2f2;
+    --accent: #6cff6c;
+    --muted: #999;
+    --code-bg: transparent;
+}
+
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+
+    scroll-behavior: smooth;
+}
+
+/* HERO */
+.hero {
+    min-height: 100vh;
+    padding: 80px 6%;
+    display: flex;
+    align-items: center;
+}
+
+/* HERO GRID - opcja delikatna */
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 360px;
+    gap: 0;
+    width: 100%;
+    align-items: start;
+}
+
+/* CODE CARD - opcja delikatna */
+.code-card {
+    width: 100%;
+    max-width: 360px;
+    padding: 6px 8px;
+    background: transparent;
+    transform: rotate(6deg) skewY(2deg) translateX(-60px);
+    transform-origin: center;
+    position: relative;
+    overflow: visible;
+    transition: transform 0.25s ease;
+    pointer-events: none;
+}
+
+/* responsywność */
+@media (max-width: 900px) {
+    .hero-grid {
+        grid-template-columns: 1fr;
+    }
+    .code-card {
+        margin-top: 18px;
+        transform: none !important;
+        right: 0;
+    }
+}
+
+.hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    margin-bottom: 20px;
+}
+
+.hero span {
+    color: var(--accent);
+}
+
+.hero p {
+    color: var(--muted);
+    margin-bottom: 30px;
+}
+
+.btn {
+    width: fit-content;
+    padding: 12px 24px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: var(--accent);
+    color: #000;
+}
+
+/* SEKCJE */
+section {
+    padding: 100px 6%;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 40px;
+}
+
+/* PROJEKTY */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    border: 1px solid #222;
+    padding: 30px;
+    transition: 0.3s;
+    cursor: pointer;
+    background: rgba(255,255,255,0.01);
+}
+
+.card:hover {
+    border-color: var(--accent);
+    transform: translateY(-5px);
+}
+
+.card h3 {
+    margin-bottom: 10px;
+}
+
+/* ABOUT / CONTACT */
+.about p,
+.contact p {
+    max-width: 600px;
+    color: var(--muted);
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 30px;
+    color: var(--muted);
+    border-top: 1px solid #00000000;
+}
+
+/* SOCIAL ICONS */
+.socials {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    z-index: 999;
+}
+
+.socials img {
+    width: 32px;
+    height: 32px;
+    filter: brightness(0) invert(1); /* białe ikony */
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.socials img:hover {
+    transform: scale(1.2) rotate(5deg);
+    filter: drop-shadow(0 0 8px var(--accent));
+}
+
+/* CODE CARD: bez ramki, obrócony w drugą stronę, bliżej tekstu, bez tła */
+.code-card {
+    width: 100%;
+    max-width: 360px;
+    padding: 8px 10px;
+    background: transparent; /* brak ramki i tła */
+    transform: rotate(6deg) skewY(2deg) translateX(-40px); /* przesunięcie bliżej napisu */
+    transform-origin: center;
+    position: relative;
+    overflow: visible;
+    transition: transform 0.25s ease;
+    pointer-events: none; /* nie przeszkadza w klikalności obok */
+}
+
+/* pre/code: stała wysokość odpowiadająca ~8 liniom, przewija się wewnątrz */
+.code {
+    font-family: "Fira Code", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+    font-size: 15px; /* większy kod */
+    color: var(--accent); /* cały tekst w zielonym */
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.45;
+    background: transparent;
+    border: none;
+    outline: none;
+    height: 164px; /* stała wysokość (~8 linii) */
+    overflow-y: auto;
+    padding-right: 8px;
+    padding-left: 6px;
+    pointer-events: none;
+}
+
+/* ukryj paski przewijania wizualnie, ale pozostaw przewijanie */
+.code::-webkit-scrollbar { width: 6px; }
+.code::-webkit-scrollbar-thumb { background: rgba(108,255,108,0.12); border-radius: 3px; }
+.code::-webkit-scrollbar-track { background: transparent; }
+
+.code .kw { color: var(--accent); } /* keyword w tym samym kolorze */
+.code .str { color: var(--accent); opacity: 0.95; } /* string też zielony */
+.code .fn { color: var(--accent); opacity: 0.95; }
+
+/* kursor */
+.code-cursor {
+    position: absolute;
+    right: 10px;
+    bottom: 12px;
+    color: var(--accent);
+    font-family: monospace;
+    animation: blink 1s steps(2, start) infinite;
+    transform: rotate(-6deg);
+    pointer-events: none;
+}
+
+/* glitch class - krótkie przekłamania wizualne */
+.code-card.glitch {
+    filter: hue-rotate(6deg) saturate(1.05);
+}
+
+.code-card.glitch .code {
+    text-shadow: 0 0 6px rgba(108,255,108,0.16);
+}
+
+/* kursor migający */
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+
+/* ===== Sparkle text ===== */
+.sparkle {
+    position: relative;
+    color: var(--accent);
+}
+
+/* pojedyncza gwiazdka */
+.sparkle::before,
+.sparkle::after {
+    content: "✦";
+    position: absolute;
+    color: var(--accent);
+    font-size: 0.6em;
+    opacity: 0;
+    animation: sparkle 2.8s infinite ease-in-out;
+}
+
+/* pierwsza iskra */
+.sparkle::before {
+    top: -0.6em;
+    left: -0.4em;
+    animation-delay: 0s;
+}
+
+/* druga iskra */
+.sparkle::after {
+    bottom: -0.8em;
+    right: -0.5em;
+    animation-delay: 1.4s;
+}
+
+/* animacja błysku */
+@keyframes sparkle {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) rotate(0deg);
+    }
+    30% {
+        opacity: 1;
+        transform: scale(1) rotate(20deg);
+    }
+    60% {
+        opacity: 0;
+        transform: scale(0.3) rotate(45deg);
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+
+/* ===== Alien hero ===== */
+.hero-alien {
+    display: block;
+    width: 110px;              /* rozmiar – możesz zmienić */
+    margin-bottom: 20px;       /* odstęp od napisu */
+    opacity: 0.55;             /* subtelność */
+    filter:
+        drop-shadow(0 0 18px rgba(108, 255, 108, 0.35));
+    pointer-events: none;      /* nie łapie klików */
+}
+
+/* centrowanie tylko kosmity (tekst zostaje normalnie) */
+.hero-text {
+    position: relative;
+}
+
+/* mobile */
+@media (max-width: 600px) {
+    .hero-alien {
+        width: 80px;
+        margin-bottom: 16px;
+    }
+}
+
+.hero-alien {
+    animation: alien-float 6s ease-in-out infinite;
+}
+
+@keyframes alien-float {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-6px); }
+    100% { transform: translateY(0); }
+}
+
